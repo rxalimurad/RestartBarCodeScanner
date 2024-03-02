@@ -9,13 +9,21 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        TabView {
+            ScanScreen()
+                .tabItem {
+                    Image(systemName: "barcode.viewfinder")
+                    Text("Scan")
+                }
+                .tag(0)
+            
+            UploadCSVScreen()
+                .tabItem {
+                    Image(systemName: "square.and.arrow.up")
+                    Text("Upload new CSV")
+                }
+                .tag(1)
         }
-        .padding()
     }
 }
 

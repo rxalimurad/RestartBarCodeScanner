@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "12524280-94C0-4F01-A74C-7650E6FAE528"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "746745D8-BC08-4901-A929-C58A3D627C61"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RestartBarCodeScanner/UploadCSVScreen.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "46"
+            endingLineNumber = "46"
+            landmarkName = "readFileContent(from:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3AB9F4CD-0EF9-4F12-8CA7-B817DF38D48E"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RestartBarCodeScanner/UploadCSVScreen.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "45"
+            endingLineNumber = "45"
+            landmarkName = "readFileContent(from:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E244CC6D-7AF0-4C49-A735-8B9D72BB5D7E"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../Library/Developer/Xcode/DerivedData/RestartBarCodeScanner-eqflwsaujdqkxefxkbmunmloxocs/SourcePackages/checkouts/SwiftCSV/SwiftCSV/CSV.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "97"
+            endingLineNumber = "97"
+            landmarkName = "init(string:delimiter:loadColumns:rowLimit:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4944C765-3307-4789-B541-D6FC6DFF4477"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../Library/Developer/Xcode/DerivedData/RestartBarCodeScanner-eqflwsaujdqkxefxkbmunmloxocs/SourcePackages/checkouts/SwiftCSV/SwiftCSV/Parser.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "41"
+            endingLineNumber = "41"
+            landmarkName = "array(text:delimiter:startAt:rowLimit:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "4944C765-3307-4789-B541-D6FC6DFF4477 - a5e967547dfa1e96"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static SwiftCSV.Parser.array(text: Swift.String, delimiter: SwiftCSV.CSVDelimiter, startAt: Swift.Int, rowLimit: Swift.Optional&lt;Swift.Int&gt;) throws -&gt; Swift.Array&lt;Swift.Array&lt;Swift.String&gt;&gt;"
+                  moduleName = "RestartBarCodeScanner"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/murad/Library/Developer/Xcode/DerivedData/RestartBarCodeScanner-eqflwsaujdqkxefxkbmunmloxocs/SourcePackages/checkouts/SwiftCSV/SwiftCSV/Parser.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "41"
+                  endingLineNumber = "41"
+                  offsetFromSymbolStart = "232">
+               </Location>
+               <Location
+                  uuid = "4944C765-3307-4789-B541-D6FC6DFF4477 - 53f5088c0fcb0e86"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Array&lt;Swift.String&gt;) -&gt; () in static SwiftCSV.Parser.array(text: Swift.String, delimiter: SwiftCSV.CSVDelimiter, startAt: Swift.Int, rowLimit: Swift.Optional&lt;Swift.Int&gt;) throws -&gt; Swift.Array&lt;Swift.Array&lt;Swift.String&gt;&gt;"
+                  moduleName = "RestartBarCodeScanner"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/murad/Library/Developer/Xcode/DerivedData/RestartBarCodeScanner-eqflwsaujdqkxefxkbmunmloxocs/SourcePackages/checkouts/SwiftCSV/SwiftCSV/Parser.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "39"
+                  endingLineNumber = "39"
+                  offsetFromSymbolStart = "36">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "06614C69-3C9F-4D6F-927D-DF27478A503E"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../Library/Developer/Xcode/DerivedData/RestartBarCodeScanner-eqflwsaujdqkxefxkbmunmloxocs/SourcePackages/checkouts/SwiftCSV/SwiftCSV/NamedCSVView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "19"
+            endingLineNumber = "19"
+            landmarkName = "init(header:text:delimiter:loadColumns:rowLimit:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "06614C69-3C9F-4D6F-927D-DF27478A503E - 4748bba81f6f8246"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SwiftCSV.Named.init(header: Swift.Array&lt;Swift.String&gt;, text: Swift.String, delimiter: SwiftCSV.CSVDelimiter, loadColumns: Swift.Bool, rowLimit: Swift.Optional&lt;Swift.Int&gt;) throws -&gt; SwiftCSV.Named"
+                  moduleName = "RestartBarCodeScanner"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/murad/Library/Developer/Xcode/DerivedData/RestartBarCodeScanner-eqflwsaujdqkxefxkbmunmloxocs/SourcePackages/checkouts/SwiftCSV/SwiftCSV/NamedCSVView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "19"
+                  endingLineNumber = "19"
+                  offsetFromSymbolStart = "148">
+               </Location>
+               <Location
+                  uuid = "06614C69-3C9F-4D6F-927D-DF27478A503E - c527b3b7ece635d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () throws -&gt; Swift.Array&lt;Swift.Dictionary&lt;Swift.String, Swift.String&gt;&gt; in SwiftCSV.Named.init(header: Swift.Array&lt;Swift.String&gt;, text: Swift.String, delimiter: SwiftCSV.CSVDelimiter, loadColumns: Swift.Bool, rowLimit: Swift.Optional&lt;Swift.Int&gt;) throws -&gt; SwiftCSV.Named"
+                  moduleName = "RestartBarCodeScanner"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/murad/Library/Developer/Xcode/DerivedData/RestartBarCodeScanner-eqflwsaujdqkxefxkbmunmloxocs/SourcePackages/checkouts/SwiftCSV/SwiftCSV/NamedCSVView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "20"
+                  endingLineNumber = "20"
+                  offsetFromSymbolStart = "172">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "81410897-6E99-493D-B573-2EC39304E6D3"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../Library/Developer/Xcode/DerivedData/RestartBarCodeScanner-eqflwsaujdqkxefxkbmunmloxocs/SourcePackages/checkouts/SwiftCSV/SwiftCSV/Parser.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "64"
+            endingLineNumber = "64"
+            landmarkName = "enumerateAsArray(text:delimiter:startAt:rowLimit:rowCallback:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "81410897-6E99-493D-B573-2EC39304E6D3 - 4f0e714e8041e4c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static SwiftCSV.Parser.enumerateAsArray(text: Swift.String, delimiter: SwiftCSV.CSVDelimiter, startAt: Swift.Int, rowLimit: Swift.Optional&lt;Swift.Int&gt;, rowCallback: (Swift.Array&lt;Swift.String&gt;) -&gt; ()) throws -&gt; ()"
+                  moduleName = "RestartBarCodeScanner"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/murad/Library/Developer/Xcode/DerivedData/RestartBarCodeScanner-eqflwsaujdqkxefxkbmunmloxocs/SourcePackages/checkouts/SwiftCSV/SwiftCSV/Parser.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "64"
+                  endingLineNumber = "64"
+                  offsetFromSymbolStart = "248">
+               </Location>
+               <Location
+                  uuid = "81410897-6E99-493D-B573-2EC39304E6D3 - 2296d10b45823b52"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Int) -&gt; Swift.Optional&lt;Swift.Int&gt; in static SwiftCSV.Parser.enumerateAsArray(text: Swift.String, delimiter: SwiftCSV.CSVDelimiter, startAt: Swift.Int, rowLimit: Swift.Optional&lt;Swift.Int&gt;, rowCallback: (Swift.Array&lt;Swift.String&gt;) -&gt; ()) throws -&gt; ()"
+                  moduleName = "RestartBarCodeScanner"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/murad/Library/Developer/Xcode/DerivedData/RestartBarCodeScanner-eqflwsaujdqkxefxkbmunmloxocs/SourcePackages/checkouts/SwiftCSV/SwiftCSV/Parser.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "64"
+                  endingLineNumber = "64"
+                  offsetFromSymbolStart = "40">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
