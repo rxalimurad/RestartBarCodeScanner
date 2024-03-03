@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FA0F060E2B949536004179D8 /* ProductModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0F060D2B949536004179D8 /* ProductModel.swift */; };
 		FA60ED812B939D840003A730 /* RestartBarCodeScannerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA60ED802B939D840003A730 /* RestartBarCodeScannerApp.swift */; };
 		FA60ED832B939D840003A730 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA60ED822B939D840003A730 /* ContentView.swift */; };
 		FA60ED852B939D860003A730 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA60ED842B939D860003A730 /* Assets.xcassets */; };
@@ -43,9 +44,18 @@
 		FA60EDCB2B93A44B0003A730 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = FA60EDCA2B93A44B0003A730 /* FirebaseStorage */; };
 		FA60EDCD2B93A44B0003A730 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = FA60EDCC2B93A44B0003A730 /* FirebaseStorageCombine-Community */; };
 		FA60EDCF2B93A6990003A730 /* UploadCSVScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA60EDCE2B93A6990003A730 /* UploadCSVScreen.swift */; };
+		FA6902392B95161C00C5C93F /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = FA6902382B95161C00C5C93F /* CodeScanner */; };
+		FA69023C2B951A4800C5C93F /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = FA69023B2B951A4800C5C93F /* Realm */; };
+		FA69023E2B951A4800C5C93F /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = FA69023D2B951A4800C5C93F /* RealmSwift */; };
+		FA6902402B951AC800C5C93F /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA69023F2B951AC800C5C93F /* RealmManager.swift */; };
+		FA74C6E92B94FF49006B51C0 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = FA74C6E82B94FF49006B51C0 /* SDWebImageSwiftUI */; };
+		FA74C6EB2B95011E006B51C0 /* ProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA74C6EA2B95011E006B51C0 /* ProductView.swift */; };
+		FA8920B82B94A5B50094B66D /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8920B72B94A5B50094B66D /* AlertManager.swift */; };
+		FA8920BA2B94AC810094B66D /* FilePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8920B92B94AC810094B66D /* FilePickerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FA0F060D2B949536004179D8 /* ProductModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductModel.swift; sourceTree = "<group>"; };
 		FA60ED7D2B939D840003A730 /* RestartBarCodeScanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RestartBarCodeScanner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA60ED802B939D840003A730 /* RestartBarCodeScannerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestartBarCodeScannerApp.swift; sourceTree = "<group>"; };
 		FA60ED822B939D840003A730 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -55,6 +65,10 @@
 		FA60ED932B93A1400003A730 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		FA60ED952B93A2810003A730 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FA60EDCE2B93A6990003A730 /* UploadCSVScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadCSVScreen.swift; sourceTree = "<group>"; };
+		FA69023F2B951AC800C5C93F /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
+		FA74C6EA2B95011E006B51C0 /* ProductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductView.swift; sourceTree = "<group>"; };
+		FA8920B72B94A5B50094B66D /* AlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertManager.swift; sourceTree = "<group>"; };
+		FA8920B92B94AC810094B66D /* FilePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePickerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,8 +81,10 @@
 				FA60EDBD2B93A44B0003A730 /* FirebaseInAppMessagingSwift-Beta in Frameworks */,
 				FA60EDC32B93A44B0003A730 /* FirebaseMessaging in Frameworks */,
 				FA60EDA32B93A44B0003A730 /* FirebaseAppDistribution-Beta in Frameworks */,
+				FA69023C2B951A4800C5C93F /* Realm in Frameworks */,
 				FA60EDA72B93A44B0003A730 /* FirebaseAuthCombine-Community in Frameworks */,
 				FA60EDB32B93A44B0003A730 /* FirebaseFirestoreCombine-Community in Frameworks */,
+				FA69023E2B951A4800C5C93F /* RealmSwift in Frameworks */,
 				FA60ED9D2B93A44B0003A730 /* FirebaseAnalyticsSwift in Frameworks */,
 				FA60EDC12B93A44B0003A730 /* FirebaseMLModelDownloader in Frameworks */,
 				FA60ED9F2B93A44B0003A730 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
@@ -76,6 +92,7 @@
 				FA60EDB52B93A44B0003A730 /* FirebaseFirestoreSwift in Frameworks */,
 				FA60ED9B2B93A44B0003A730 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
 				FA60EDA12B93A44B0003A730 /* FirebaseAppCheck in Frameworks */,
+				FA6902392B95161C00C5C93F /* CodeScanner in Frameworks */,
 				FA60EDC52B93A44B0003A730 /* FirebasePerformance in Frameworks */,
 				FA60EDBB2B93A44B0003A730 /* FirebaseInAppMessaging-Beta in Frameworks */,
 				FA60EDB92B93A44B0003A730 /* FirebaseFunctionsCombine-Community in Frameworks */,
@@ -87,6 +104,7 @@
 				FA60EDCD2B93A44B0003A730 /* FirebaseStorageCombine-Community in Frameworks */,
 				FA60ED902B939F6B0003A730 /* SwiftCSV in Frameworks */,
 				FA60EDA52B93A44B0003A730 /* FirebaseAuth in Frameworks */,
+				FA74C6E92B94FF49006B51C0 /* SDWebImageSwiftUI in Frameworks */,
 				FA60EDAF2B93A44B0003A730 /* FirebaseDynamicLinks in Frameworks */,
 				FA60EDB12B93A44B0003A730 /* FirebaseFirestore in Frameworks */,
 				FA60EDC92B93A44B0003A730 /* FirebaseRemoteConfigSwift in Frameworks */,
@@ -123,6 +141,11 @@
 				FA60ED862B939D860003A730 /* Preview Content */,
 				FA60ED932B93A1400003A730 /* View.swift */,
 				FA60EDCE2B93A6990003A730 /* UploadCSVScreen.swift */,
+				FA0F060D2B949536004179D8 /* ProductModel.swift */,
+				FA8920B72B94A5B50094B66D /* AlertManager.swift */,
+				FA8920B92B94AC810094B66D /* FilePickerView.swift */,
+				FA74C6EA2B95011E006B51C0 /* ProductView.swift */,
+				FA69023F2B951AC800C5C93F /* RealmManager.swift */,
 			);
 			path = RestartBarCodeScanner;
 			sourceTree = "<group>";
@@ -180,6 +203,10 @@
 				FA60EDC82B93A44B0003A730 /* FirebaseRemoteConfigSwift */,
 				FA60EDCA2B93A44B0003A730 /* FirebaseStorage */,
 				FA60EDCC2B93A44B0003A730 /* FirebaseStorageCombine-Community */,
+				FA74C6E82B94FF49006B51C0 /* SDWebImageSwiftUI */,
+				FA6902382B95161C00C5C93F /* CodeScanner */,
+				FA69023B2B951A4800C5C93F /* Realm */,
+				FA69023D2B951A4800C5C93F /* RealmSwift */,
 			);
 			productName = RestartBarCodeScanner;
 			productReference = FA60ED7D2B939D840003A730 /* RestartBarCodeScanner.app */;
@@ -212,6 +239,9 @@
 			packageReferences = (
 				FA60ED8E2B939F6B0003A730 /* XCRemoteSwiftPackageReference "SwiftCSV" */,
 				FA60ED972B93A44A0003A730 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				FA74C6E72B94FF49006B51C0 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+				FA6902372B95161C00C5C93F /* XCRemoteSwiftPackageReference "CodeScanner" */,
+				FA69023A2B951A4800C5C93F /* XCRemoteSwiftPackageReference "realm-swift" */,
 			);
 			productRefGroup = FA60ED7E2B939D840003A730 /* Products */;
 			projectDirPath = "";
@@ -240,10 +270,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA8920BA2B94AC810094B66D /* FilePickerView.swift in Sources */,
+				FA74C6EB2B95011E006B51C0 /* ProductView.swift in Sources */,
 				FA60ED942B93A1400003A730 /* View.swift in Sources */,
+				FA0F060E2B949536004179D8 /* ProductModel.swift in Sources */,
 				FA60ED832B939D840003A730 /* ContentView.swift in Sources */,
 				FA60ED812B939D840003A730 /* RestartBarCodeScannerApp.swift in Sources */,
 				FA60ED922B93A0390003A730 /* ScanScreen.swift in Sources */,
+				FA6902402B951AC800C5C93F /* RealmManager.swift in Sources */,
+				FA8920B82B94A5B50094B66D /* AlertManager.swift in Sources */,
 				FA60EDCF2B93A6990003A730 /* UploadCSVScreen.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -382,6 +417,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Restart Scanner";
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app is using camera to scan barcodes";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -392,7 +428,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.awesomeApps.RestartBarCodeScanner;
+				PRODUCT_BUNDLE_IDENTIFIER = com.awesomeApps.RBarCodeScanning;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -412,6 +448,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Restart Scanner";
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app is using camera to scan barcodes";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -422,7 +459,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.awesomeApps.RestartBarCodeScanner;
+				PRODUCT_BUNDLE_IDENTIFIER = com.awesomeApps.RBarCodeScanning;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -468,6 +505,30 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 10.21.0;
+			};
+		};
+		FA6902372B95161C00C5C93F /* XCRemoteSwiftPackageReference "CodeScanner" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/twostraws/CodeScanner";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.4.0;
+			};
+		};
+		FA69023A2B951A4800C5C93F /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+		FA74C6E72B94FF49006B51C0 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.2.6;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -612,6 +673,26 @@
 			isa = XCSwiftPackageProductDependency;
 			package = FA60ED972B93A44A0003A730 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = "FirebaseStorageCombine-Community";
+		};
+		FA6902382B95161C00C5C93F /* CodeScanner */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FA6902372B95161C00C5C93F /* XCRemoteSwiftPackageReference "CodeScanner" */;
+			productName = CodeScanner;
+		};
+		FA69023B2B951A4800C5C93F /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FA69023A2B951A4800C5C93F /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = Realm;
+		};
+		FA69023D2B951A4800C5C93F /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FA69023A2B951A4800C5C93F /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
+		};
+		FA74C6E82B94FF49006B51C0 /* SDWebImageSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FA74C6E72B94FF49006B51C0 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
+			productName = SDWebImageSwiftUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
