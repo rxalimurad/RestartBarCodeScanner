@@ -123,4 +123,12 @@ class ScanController extends GetxController {
       }).toList();
     }
   }
+
+  void updateBarCode({required String barcode, required String id}) {
+    CollectionReference products = FirebaseFirestore.instance.collection('Product');
+    DocumentReference productRef = products.doc(id);
+    productRef.update({'barCode': barcode})
+        .then((value) => print("Document Updated"))
+        .catchError((error) => print("Failed to update document: $error"));
+  }
 }

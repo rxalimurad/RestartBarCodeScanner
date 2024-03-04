@@ -69,6 +69,7 @@ class ScanScreen extends StatelessWidget {
                           centerTitle: true,
                           onScanned: (res) {
                             print(res);
+                            _scanController.updateBarCode(barcode: res, id: item.id);
                           },
                         );
                       });
