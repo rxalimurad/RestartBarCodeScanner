@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:csv/csv.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
@@ -20,6 +19,8 @@ class UploadCSVController extends GetxController {
   }
 
   void uploadProductsToFirestore(List<ProductModel> productsList) async {
+    print("Uploading products to Firestore");
+    print(productsList.length);
     totalRecords.value = productsList.length;
     print(productsList.first.id);
     print(productsList.first.category);
@@ -45,7 +46,8 @@ class UploadCSVController extends GetxController {
       if (snapshot.docs.isNotEmpty) {
         alreadyExist++;
       } else {
-        final productRef = db.collection('Products').doc();
+        final productRef = db.collection('Products').doc(product.id);
+
         batch.set(productRef, product.toJson());
         uploadedCount++;
       }
@@ -53,7 +55,7 @@ class UploadCSVController extends GetxController {
     try {
       await batch.commit();
       print("Batch updated successfully.");
-    } catch(e) {
+    } catch (e) {
       print(e);
     }
     isLoading.value = false;
@@ -72,7 +74,10 @@ class UploadCSVController extends GetxController {
       print(csvTable.length);
       for (var row in csvTable) {
         if (row.length == 6) {
-          String category = row[0]; String name = row[1]; String desc = row[4]; String additionalInfo = row[5];
+          String category = row[0];
+          String name = row[1];
+          String desc = row[4];
+          String additionalInfo = row[5];
           List<String> imageURLs = [];
           if (row[2] != null) {
             String imgURL = row[2];
@@ -91,9 +96,17 @@ class UploadCSVController extends GetxController {
               recommendedGrade = arrURL[1].trim();
             }
           }
-          products.add(
-              ProductModel(id: "$idx", category: category, productName: name, allProductImageURLs: imageURLs, recommendedAge: recommendedAge, recommendedGrade: recommendedGrade, desc: desc, additionalInfo: additionalInfo)
-          );
+          products.add(ProductModel(
+              id: "$idx",
+              category: category,
+              productName: name,
+              allProductImageURLs: imageURLs,
+              recommendedAge: recommendedAge,
+              recommendedGrade: recommendedGrade,
+              desc: desc,
+              additionalInfo: additionalInfo,
+              barcode: null));
+          idx++;
         }
       }
 

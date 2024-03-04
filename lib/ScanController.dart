@@ -1,14 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
-
-import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
+
 import 'Model/Model.dart';
 
 class ScanController extends GetxController {
   final searchText = ''.obs;
-  final isFiltering = true.obs;
+  final showunScannedProductOnly = true.obs;
   final isLoading = false.obs;
   final products = <ProductModel>[].obs;
 
@@ -16,7 +15,6 @@ class ScanController extends GetxController {
   void onInit() {
     fetchProducts();
   }
-
 
   void fetchProducts() async {
     isLoading.value = true;
@@ -29,18 +27,21 @@ class ScanController extends GetxController {
         this.products.value = cachedProducts;
       } else {
         // Otherwise, fetch products from Firestore
-        QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('Products').get();
+        QuerySnapshot querySnapshot =
+            await FirebaseFirestore.instance.collection('Products').get();
         List<ProductModel> products = querySnapshot.docs.map((doc) {
           Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
           return ProductModel(
-            id: doc.id,
+            id: data['id'],
             category: data['category'],
             productName: data['productName'],
-            allProductImageURLs: List<String>.from(data['allProductImageURLs']),
+            allProductImageURLs:
+                List<String>.from(data['allProductImageURLs'] ?? []),
             recommendedAge: data['recommendedAge'],
             recommendedGrade: data['recommendedGrade'],
             desc: data['desc'],
             additionalInfo: data['additionalInfo'],
+            barcode: data['barcode'],
           );
         }).toList();
 
@@ -59,33 +60,38 @@ class ScanController extends GetxController {
 
 // Function to retrieve products from cache
   Future<List<ProductModel>> getProductsFromCache() async {
+    print("getProductsFromCache");
     final Database db = await openDatabase(
       join(await getDatabasesPath(), 'products_database.db'),
       onCreate: (db, version) {
         return db.execute(
-          "CREATE TABLE products(id TEXT PRIMARY KEY, category TEXT, productName TEXT, allProductImageURLs TEXT, recommendedAge TEXT, recommendedGrade TEXT, desc TEXT, additionalInfo TEXT)",
+          "CREATE TABLE products(id TEXT PRIMARY KEY, category TEXT, productName TEXT, allProductImageURLs TEXT, recommendedAge TEXT, recommendedGrade TEXT, desc TEXT, additionalInfo TEXT, barcode TEXT)",
         );
       },
       version: 1,
     );
 
     final List<Map<String, dynamic>> maps = await db.query('products');
-
+    print(
+      join(await getDatabasesPath(), 'products_database.db'),
+    );
     await db.close();
-    print("images ${maps[0]['category']}");
+    if (maps.isEmpty) {
+      return [];
+    }
     return List.generate(maps.length, (i) {
-      var images = maps[i]['allProductImageURLs'].map((ele) => "${ele}").toList();
+      var images = (maps[i]['allProductImageURLs'] ?? []).split(",");
 
       return ProductModel(
-        id: maps[i]['id'],
-        category: maps[i]['category'],
-        productName: maps[i]['productName'],
-        allProductImageURLs: List<String>.from(images),
-        recommendedAge: maps[i]['recommendedAge'],
-        recommendedGrade: maps[i]['recommendedGrade'],
-        desc: maps[i]['desc'],
-        additionalInfo: maps[i]['additionalInfo'],
-      );
+          id: maps[i]['id'],
+          category: maps[i]['category'],
+          productName: maps[i]['productName'],
+          allProductImageURLs: images,
+          recommendedAge: maps[i]['recommendedAge'],
+          recommendedGrade: maps[i]['recommendedGrade'],
+          desc: maps[i]['desc'],
+          additionalInfo: maps[i]['additionalInfo'],
+          barcode: maps[i]['barcode']);
     });
   }
 
@@ -95,16 +101,18 @@ class ScanController extends GetxController {
       join(await getDatabasesPath(), 'products_database.db'),
       onCreate: (db, version) {
         return db.execute(
-          "CREATE TABLE products(id TEXT PRIMARY KEY, category TEXT, productName TEXT, allProductImageURLs TEXT, recommendedAge TEXT, recommendedGrade TEXT, desc TEXT, additionalInfo TEXT)",
+          "CREATE TABLE products(id TEXT PRIMARY KEY, category TEXT, productName TEXT, allProductImageURLs TEXT, recommendedAge TEXT, recommendedGrade TEXT, desc TEXT, additionalInfo TEXT, barcode TEXT)",
         );
       },
       version: 1,
     );
-
+    print(
+      join(await getDatabasesPath(), 'products_database.db'),
+    );
     for (ProductModel product in products) {
       await db.insert(
         'products',
-        product.toJson(),
+        product.toJsonForDB(),
         conflictAlgorithm: ConflictAlgorithm.replace,
       );
     }
@@ -112,23 +120,75 @@ class ScanController extends GetxController {
     await db.close();
   }
 
-
   List<ProductModel> get filteredItems {
     if (searchText.value.isEmpty) {
-      return products;
-    } else {
       return products.where((item) {
-        return (item.productName ?? "").toLowerCase().contains(searchText.value.toLowerCase()) ||
-            (item.category ?? "").toLowerCase().contains(searchText.value.toLowerCase());
+        if (showunScannedProductOnly.value) {
+          return item.barcode == null || item.barcode!.isEmpty;
+        } else {
+          return true;
+        }
       }).toList();
+    } else {
+      return products
+          .where((item) {
+            return (item.productName ?? "")
+                    .toLowerCase()
+                    .contains(searchText.value.toLowerCase()) ||
+                (item.category ?? "")
+                    .toLowerCase()
+                    .contains(searchText.value.toLowerCase());
+          })
+          .toList()
+          .where((item) {
+            if (showunScannedProductOnly.value) {
+              return item.barcode == null || item.barcode!.isEmpty;
+            } else {
+              return true;
+            }
+          })
+          .toList();
     }
   }
 
-  void updateBarCode({required String barcode, required String id}) {
-    CollectionReference products = FirebaseFirestore.instance.collection('Product');
-    DocumentReference productRef = products.doc(id);
-    productRef.update({'barCode': barcode})
-        .then((value) => print("Document Updated"))
-        .catchError((error) => print("Failed to update document: $error"));
+  Future<void> updateBarCode(
+      {required String barcode, required String id}) async {
+    try {
+      CollectionReference products =
+          FirebaseFirestore.instance.collection('Products');
+      DocumentReference productRef = products.doc(id);
+      await productRef.update({'barcode': barcode});
+      await updateSQLiteTable(id: id, barcode: barcode);
+    } catch (e) {
+      print("Failed to update barcode: $e");
+    }
+  }
+
+  Future<void> updateSQLiteTable(
+      {required String id, required String barcode}) async {
+    try {
+      // Open the database
+      final database = openDatabase(
+        join(await getDatabasesPath(), 'products_database.db'),
+        onCreate: (db, version) {
+          // Run the CREATE TABLE query if the table does not exist
+          return db.execute(
+            "CREATE TABLE IF NOT EXISTS products(id TEXT PRIMARY KEY, category TEXT, productName TEXT, allProductImageURLs TEXT, recommendedAge TEXT, recommendedGrade TEXT, desc TEXT, additionalInfo TEXT, barcode TEXT)",
+          );
+        },
+        version: 1,
+      );
+
+      // Update barcode in SQLite table
+      final db = await database;
+      await db.rawUpdate(
+        'UPDATE products SET barcode = ? WHERE id = ?',
+        [barcode, id],
+      );
+
+      print("SQLite Table Updated");
+    } catch (e) {
+      print("Failed to update SQLite table: $e");
+    }
   }
 }

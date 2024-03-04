@@ -1,9 +1,8 @@
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+import 'package:restart_scanner/Constants.dart';
+
 import 'UploadCSVController.dart';
 
 class UploadCSVScreen extends StatelessWidget {
@@ -25,19 +24,28 @@ class UploadCSVScreen extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 20),
             ),
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
             Obx(() {
               if (controller.pickedFileURL.value.isNotEmpty) {
-                return Text("Selected File: ${controller.pickedFileURL.value.split("/").last}");
+                return Text(
+                    "Selected File: ${controller.pickedFileURL.value.split("/").last}");
               } else {
                 return Text("No file selected");
               }
             }),
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
             ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(primaryColor),
+                foregroundColor: MaterialStateProperty.all(Colors.white),
+              ),
               onPressed: () async {
-                FilePickerResult? result = await FilePicker.platform
-                    .pickFiles();
+                FilePickerResult? result =
+                    await FilePicker.platform.pickFiles();
 
                 if (result?.files.single.path != null) {
                   controller.selectFile(result!.files.single.path!);
@@ -47,33 +55,36 @@ class UploadCSVScreen extends StatelessWidget {
               },
               child: Text("Select File"),
             ),
-
-              Obx(() {
-                if (controller.pickedFileURL.isNotEmpty) {
-                  return ElevatedButton(
-                    onPressed: () async {
-                      // Upload to server
-                      // Read file content and upload products
-                      final pickedFileURL = controller.pickedFileURL.value;
-                      if (pickedFileURL.isNotEmpty) {
-                        final products = await controller.readFileContent(
-                            pickedFileURL);
-                        if (products != null) {
-                          //,,..
-                          controller.uploadProductsToFirestore(products.sublist(1,5));
-                        }
+            Obx(() {
+              if (controller.pickedFileURL.isNotEmpty) {
+                return ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(primaryColor),
+                    foregroundColor: MaterialStateProperty.all(Colors.white),
+                  ),
+                  onPressed: () async {
+                    // Upload to server
+                    // Read file content and upload products
+                    final pickedFileURL = controller.pickedFileURL.value;
+                    if (pickedFileURL.isNotEmpty) {
+                      final products =
+                          await controller.readFileContent(pickedFileURL);
+                      if (products != null) {
+                        controller.uploadProductsToFirestore(
+                            products.sublist(1, products.length - 1));
                       }
-                    },
-                    child: Obx(() {
-                      return !controller.isLoading.value
-                          ? Text("Upload to Server")
-                          : CircularProgressIndicator();
-                    }),
-                  );
-                } else {
-                  return SizedBox();
-                }
-              }),
+                    }
+                  },
+                  child: Obx(() {
+                    return !controller.isLoading.value
+                        ? Text("Upload to Server")
+                        : CircularProgressIndicator();
+                  }),
+                );
+              } else {
+                return SizedBox();
+              }
+            }),
             Spacer(),
             Obx(() {
               if (controller.totalRecords.value != 0) {
@@ -90,7 +101,6 @@ class UploadCSVScreen extends StatelessWidget {
               } else {
                 return SizedBox();
               }
-
             }),
             Spacer(),
           ],

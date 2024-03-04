@@ -1,10 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
+import 'package:restart_scanner/Constants.dart';
 import 'package:simple_barcode_scanner/enum.dart';
 import 'package:simple_barcode_scanner/screens/io_device.dart';
-import 'package:simple_barcode_scanner/simple_barcode_scanner.dart';
 
 import 'ProductView.dart';
 import 'ScanController.dart';
@@ -18,12 +16,19 @@ class ScanScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text("Scan Barcodes"),
         actions: [
-          IconButton(
-            onPressed: () {
-              _scanController.isFiltering.value = !_scanController.isFiltering.value;
-            },
-            icon: Icon(_scanController.isFiltering.value ? Icons.visibility : Icons.visibility_off),
-          ),
+          Obx(() {
+            return TextButton(
+              onPressed: () {
+                _scanController.showunScannedProductOnly.value =
+                    !_scanController.showunScannedProductOnly.value;
+              },
+              child: Text(
+                  _scanController.showunScannedProductOnly.value
+                      ? "To Scanned"
+                      : "All",
+                  style: TextStyle(color: primaryColor)),
+            );
+          }),
         ],
       ),
       body: Column(
@@ -44,43 +49,47 @@ class ScanScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Obx(() => Text("Total items: ${_scanController.products.length}")),
-              Obx(() => Text("Scanned items: ${_scanController.products.length}")),
+              Obx(() =>
+                  Text("Total items: ${_scanController.products.length}")),
+              Obx(() =>
+                  Text("Scanned items: ${_scanController.products.length}")),
             ],
           ),
           SizedBox(height: 16.0),
           Obx(
-                () => _scanController.isLoading.value
+            () => _scanController.isLoading.value
                 ? CircularProgressIndicator()
                 : Expanded(
-              child: ListView.builder(
-                itemCount: _scanController.filteredItems.length,
-                itemBuilder: (context, index) {
-                  final item = _scanController.filteredItems[index];
-                  return ListTile(
-                    onTap: () async {
-                      showModalBottomSheet(context: context, builder: (BuildContext context) {
-                        return BarcodeScanner(
-                          lineColor: "#ff6666",
-                          cancelButtonText: "Cancel",
-                          isShowFlashIcon: true,
-                          scanType: ScanType.barcode,
-                          appBarTitle: "Scan Barcode",
-                          centerTitle: true,
-                          onScanned: (res) {
-                            print(res);
-                            _scanController.updateBarCode(barcode: res, id: item.id);
+                    child: ListView.builder(
+                      itemCount: _scanController.filteredItems.length,
+                      itemBuilder: (context, index) {
+                        final item = _scanController.filteredItems[index];
+                        return ListTile(
+                          onTap: () async {
+                            showModalBottomSheet(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return BarcodeScanner(
+                                    lineColor: "#ff6666",
+                                    cancelButtonText: "Cancel",
+                                    isShowFlashIcon: true,
+                                    scanType: ScanType.barcode,
+                                    appBarTitle: "Scan Barcode",
+                                    centerTitle: true,
+                                    onScanned: (res) {
+                                      print(res);
+                                      _scanController.updateBarCode(
+                                          barcode: res, id: item.id);
+                                      Navigator.pop(context);
+                                    },
+                                  );
+                                });
                           },
+                          title: ProductView(product: item),
                         );
-                      });
-
-
-                    },
-                    title: ProductView(product: item),
-                  );
-                },
-              ),
-            ),
+                      },
+                    ),
+                  ),
           ),
         ],
       ),
