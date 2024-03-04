@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:csv/csv.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 import 'Model/Model.dart'; // Import GetX package
@@ -18,16 +20,57 @@ class UploadCSVController extends GetxController {
     pickedFileURL.value = fileURL;
   }
 
+  Future<void> batchUpload(List<ProductModel> productsList) async {
+    final db = FirebaseFirestore.instance;
+    final batchSize = 100; // Set your desired batch size
+    final totalBatches = (productsList.length / batchSize).ceil();
+    int uploadedCount = 0;
+
+    for (int i = 0; i < totalBatches; i++) {
+      int startIndex = i * batchSize;
+      int endIndex = (i + 1) * batchSize;
+      if (endIndex >= productsList.length) {
+        endIndex = productsList.length;
+      }
+      print("startIndex: $startIndex, endIndex: $endIndex");
+      List<ProductModel> batchProducts =
+          productsList.sublist(startIndex, endIndex);
+
+      WriteBatch batch = db.batch();
+
+      for (var product in batchProducts) {
+        final productRef = db.collection('Products').doc(product.id);
+        batch.set(productRef, product.toJson());
+        uploadedCount++;
+      }
+
+      try {
+        await batch.commit();
+        print("Batch $i / $totalBatches updated successfully.");
+        Fluttertoast.showToast(
+            msg: "Batch $i / $totalBatches updated successfully.",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.black,
+            textColor: Colors.white,
+            fontSize: 16.0);
+        // Update progress here if needed
+      } catch (e) {
+        print(e);
+      }
+    }
+
+    print("All batches uploaded successfully.");
+    isLoading.value = false;
+  }
+
   void uploadProductsToFirestore(List<ProductModel> productsList) async {
+    // isLoading.value = true;
+    // await batchUpload(productsList);
+    return;
     print("Uploading products to Firestore");
-    print(productsList.length);
     totalRecords.value = productsList.length;
-    print(productsList.first.id);
-    print(productsList.first.category);
-    print(productsList.first.productName);
-    print(productsList.first.allProductImageURLs);
-    print(productsList.first.desc);
-    print(productsList.first.additionalInfo);
     isLoading.value = true;
     uploadedCount.value = 0;
     alreadyExist.value = 0;
@@ -47,7 +90,6 @@ class UploadCSVController extends GetxController {
         alreadyExist++;
       } else {
         final productRef = db.collection('Products').doc(product.id);
-
         batch.set(productRef, product.toJson());
         uploadedCount++;
       }

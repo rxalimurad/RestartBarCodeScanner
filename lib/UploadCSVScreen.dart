@@ -78,7 +78,11 @@ class UploadCSVScreen extends StatelessWidget {
                   child: Obx(() {
                     return !controller.isLoading.value
                         ? Text("Upload to Server")
-                        : CircularProgressIndicator();
+                        : SizedBox(
+                            height: 20,
+                            width: 20,
+                            child:
+                                CircularProgressIndicator(color: Colors.white));
                   }),
                 );
               } else {

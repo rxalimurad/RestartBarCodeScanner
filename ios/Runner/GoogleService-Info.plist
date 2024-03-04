@@ -3,17 +3,17 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
-	<string>AIzaSyB4AIcdDly2SkQO2eORKxhe8vtBUDjWnmY</string>
+	<string>AIzaSyBnxOf4z83F_BkxHSCyNNdFffpENsWcsH8</string>
 	<key>GCM_SENDER_ID</key>
-	<string>720338241298</string>
+	<string>823304677825</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.awesomeApps.RBarCodeScanning</string>
+	<string>com.example.RBarCodeScanning</string>
 	<key>PROJECT_ID</key>
-	<string>restartbar-16574</string>
+	<string>restartscanning</string>
 	<key>STORAGE_BUCKET</key>
-	<string>restartbar-16574.appspot.com</string>
+	<string>restartscanning.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:720338241298:ios:e87474dd8cdec6e69a95cb</string>
+	<string>1:823304677825:ios:e33a1338dd9311c59f6740</string>
 </dict>
 </plist>

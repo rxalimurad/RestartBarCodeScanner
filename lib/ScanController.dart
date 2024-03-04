@@ -16,9 +16,8 @@ class ScanController extends GetxController {
     fetchProducts();
   }
 
-  void fetchProducts() async {
+  Future<void> fetchProducts() async {
     isLoading.value = true;
-
     try {
       // Check if the products are already cached
       List<ProductModel> cachedProducts = await getProductsFromCache();
@@ -60,7 +59,6 @@ class ScanController extends GetxController {
 
 // Function to retrieve products from cache
   Future<List<ProductModel>> getProductsFromCache() async {
-    print("getProductsFromCache");
     final Database db = await openDatabase(
       join(await getDatabasesPath(), 'products_database.db'),
       onCreate: (db, version) {
@@ -159,6 +157,7 @@ class ScanController extends GetxController {
       DocumentReference productRef = products.doc(id);
       await productRef.update({'barcode': barcode});
       await updateSQLiteTable(id: id, barcode: barcode);
+      await fetchProducts();
     } catch (e) {
       print("Failed to update barcode: $e");
     }
