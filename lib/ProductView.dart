@@ -1,6 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'Constants.dart';
 import 'Model/Model.dart';
 
 class ProductView extends StatelessWidget {
@@ -11,21 +13,23 @@ class ProductView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Image.network(
-        product.allProductImageURLs.first,
+      leading: CachedNetworkImage(
         width: 100,
         height: 100,
-        fit: BoxFit.cover,
+        imageUrl: product.allProductImageURLs?.first ?? "",
+        placeholder: (context, url) => Icon(Icons.hourglass_bottom),
+        errorWidget: (context, url, error) => Icon(Icons.error),
       ),
+
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Category: ${product.category}", style: TextStyle(fontSize: 12)),
-          Text(product.productName),
+          Text("Category: ${product.category}", style: TextStyle(fontSize: 10)),
+          Text(product.productName ?? ""),
           Row(
             children: [
-              Text("Scanned"),
-              Icon(Icons.check_circle, color: Colors.green),
+              Text("Scanned", style: TextStyle(color: darkGreenColor),),
+              Icon(Icons.check, color: darkGreenColor),
             ],
           ),
         ],

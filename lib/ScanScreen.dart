@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:simple_barcode_scanner/enum.dart';
+import 'package:simple_barcode_scanner/screens/io_device.dart';
+import 'package:simple_barcode_scanner/simple_barcode_scanner.dart';
 
 import 'ProductView.dart';
 import 'ScanController.dart';
@@ -55,8 +58,22 @@ class ScanScreen extends StatelessWidget {
                 itemBuilder: (context, index) {
                   final item = _scanController.filteredItems[index];
                   return ListTile(
-                    onTap: () {
-                      _scanController.isPresentingScanner.value = true;
+                    onTap: () async {
+                      showModalBottomSheet(context: context, builder: (BuildContext context) {
+                        return BarcodeScanner(
+                          lineColor: "#ff6666",
+                          cancelButtonText: "Cancel",
+                          isShowFlashIcon: true,
+                          scanType: ScanType.barcode,
+                          appBarTitle: "Scan Barcode",
+                          centerTitle: true,
+                          onScanned: (res) {
+                            print(res);
+                          },
+                        );
+                      });
+
+
                     },
                     title: ProductView(product: item),
                   );
