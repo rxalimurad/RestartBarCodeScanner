@@ -37,12 +37,12 @@ dependencies:
   cupertino_icons: ^1.0.2
   simple_barcode_scanner: ^0.0.8
   get: ^4.6.6
-  cloud_firestore: ^4.15.6
   file_picker: ^6.1.1
   csv: ^6.0.0
   cached_network_image: ^3.3.1
-  sqflite: ^2.3.2
   fluttertoast: ^8.2.4
+  mongo_dart: ^0.10.0
+  infinite_scroll_pagination: ^4.0.0
 
 dev_dependencies:
   flutter_test:

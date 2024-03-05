@@ -22,20 +22,24 @@ class ProductView extends StatelessWidget {
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Category: ${product.category}", style: TextStyle(fontSize: 10)),
-          Text(product.productName ?? ""),
-          if (product.barcode != null && product.barcode!.isNotEmpty)
+          Text("Category: ${product.category}", style: TextStyle(fontSize: 11)),
+          Text(product.productName ?? "", style: TextStyle(fontSize: 13)),
+          if (product.barcode != null || product.barcode != "")
             Row(
               children: [
-                Text(
-                  "Scanned",
-                  style: TextStyle(color: darkGreenColor),
+                Text("Scanned",
+                    style: TextStyle(color: darkGreenColor, fontSize: 13)),
+                Icon(
+                  Icons.check,
+                  color: darkGreenColor,
+                  size: 20,
                 ),
-                Icon(Icons.check, color: darkGreenColor),
               ],
             ),
         ],
       ),
+      subtitle:
+          Text(product.additionalInfo ?? "", style: TextStyle(fontSize: 11)),
     );
   }
 }
