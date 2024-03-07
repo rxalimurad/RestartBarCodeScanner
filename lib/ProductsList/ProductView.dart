@@ -63,7 +63,7 @@ class ProductView extends StatelessWidget {
                           ),
                           borderRadius: BorderRadius.circular(20.0)),
                       child: Padding(
-                        padding: const EdgeInsets.all(5.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
                         child: Column(
                           children: [
                             Row(
