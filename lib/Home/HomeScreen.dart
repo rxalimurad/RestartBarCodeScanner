@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'ScanScreen.dart';
+import '../ProductsList/ProductsListScreen.dart';
+
 
 class MyHomePage extends StatelessWidget {
   final List<Map<String, dynamic>> menuItems = [
@@ -32,19 +33,23 @@ class MyHomePage extends StatelessWidget {
         appBar: AppBar(
           title: Row(
             children: [
-              Text('RESTART', style: TextStyle(color: Color(0xFFC00000))),
-              Text(' Education', style: TextStyle(color: Color(0xFF3076B5)))
+              Text('RESTART', style: TextStyle(color: Color(0xFFC00000), fontWeight: FontWeight.bold)),
+              Text(' Education', style: TextStyle(color: Color(0xFF3076B5), fontWeight: FontWeight.bold))
             ],
           ),
         ),
         backgroundColor: Colors.white,
-        body: SafeArea(child: ScanScreen()),
+        body: SafeArea(child: ProductsListScreen()),
         drawer: Drawer(
             child: Column(
           children: [
             DrawerHeader(
-              child: Text('RESTART Education'),
-              decoration: BoxDecoration(color: Color(0xFF3076B5)),
+              child: Row(
+                children: [
+                  Text('RESTART', style: TextStyle(color: Color(0xFFC00000), fontWeight: FontWeight.bold)),
+                  Text(' Education', style: TextStyle(color: Color(0xFF3076B5), fontWeight: FontWeight.bold))
+                ],
+              ),
             ),
             Expanded(
               child: ListView(

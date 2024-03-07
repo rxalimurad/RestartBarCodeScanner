@@ -1,10 +1,11 @@
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
-import 'Model/Model.dart';
-import 'MongoDbHelper.dart';
+import '../DBHandler/MongoDbHelper.dart';
+import '../Model/Model.dart';
 
-class ScanController extends GetxController {
+
+class ProductsListController extends GetxController {
   final searchText = ''.obs;
   final showunScannedProductOnly = true.obs;
   final isLoading = false.obs;
