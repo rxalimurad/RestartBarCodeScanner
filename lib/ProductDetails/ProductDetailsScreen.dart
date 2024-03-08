@@ -1,3 +1,4 @@
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
@@ -6,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:readmore/readmore.dart';
 import 'package:restart_scanner/Constants/Constants.dart';
 import 'package:restart_scanner/Model/Model.dart';
+import 'package:restart_scanner/Widgets/Barcodegenerator.dart';
 
 const titleFontSize = 15.0;
 
@@ -30,24 +32,24 @@ class ProductDetailsScreen extends StatelessWidget {
         ),
         body: Padding(
           padding: const EdgeInsets.all(10.0),
-          child: Column(
+          child: SingleChildScrollView(child: Column(
             children: [
               Container(
                 child: CarouselSlider.builder(
                   itemCount: product.allProductImageURLs?.length,
                   itemBuilder: (BuildContext context, int itemIndex,
-                          int pageViewIndex) =>
+                      int pageViewIndex) =>
                       Container(
-                    color: Colors.white12,
-                    child: CachedNetworkImage(
-                      // width: 100,
-                      height: 100,
-                      imageUrl: product.allProductImageURLs?[itemIndex] ?? "",
-                      placeholder: (context, url) =>
-                          Icon(Icons.hourglass_bottom),
-                      errorWidget: (context, url, error) => Icon(Icons.error),
-                    ),
-                  ),
+                        color: Colors.white12,
+                        child: CachedNetworkImage(
+                          // width: 100,
+                          height: 100,
+                          imageUrl: product.allProductImageURLs?[itemIndex] ?? "",
+                          placeholder: (context, url) =>
+                              Icon(Icons.hourglass_bottom),
+                          errorWidget: (context, url, error) => Icon(Icons.error),
+                        ),
+                      ),
                   options: CarouselOptions(
                     height: 200,
                     aspectRatio: 16 / 9,
@@ -129,7 +131,7 @@ class ProductDetailsScreen extends StatelessWidget {
                       trimCollapsedText: 'Show more',
                       trimExpandedText: 'Show less',
                       moreStyle:
-                          TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                      TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                     ),
                     SizedBox(height: 10),
                     Divider(),
@@ -147,12 +149,13 @@ class ProductDetailsScreen extends StatelessWidget {
                               style: TextStyle(color: Colors.white)),
                         ),
                       ),
-                    ]
+                    ],
+                    BarcodeGeneratorWidget(data: "98765432109")
                   ]
                 ],
               )
             ],
-          ),
+          ),),
         ),
       ),
     );

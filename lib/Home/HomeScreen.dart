@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:restart_scanner/ProductsList/ProductsListController.dart';
 
 import '../ProductsList/ProductsListScreen.dart';
 
@@ -78,7 +80,7 @@ class MyHomePage extends StatelessWidget {
                               title: Text(item['title']!),
                               leading: Icon(item['icon']!),
                               onTap: () {
-                                // Navigator.pushNamed(context, item['route']);
+
                               },
                             )
                           : ExpansionTile(
@@ -101,7 +103,8 @@ class MyHomePage extends StatelessWidget {
         .map((item) => ListTile(
               title: Text(item['title']!),
               onTap: () {
-                // Navigator.pushNamed(context, item['route']);
+                Get.back();
+                Get.toNamed('/all', arguments: {'category': item['title']!});
               },
             ))
         .toList();

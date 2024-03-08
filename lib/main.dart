@@ -6,6 +6,7 @@ import 'package:restart_scanner/Constants/Extensions.dart';
 
 import 'Constants/Constants.dart';
 import 'Home/HomeScreen.dart';
+import 'Routes/routes.dart';
 
 void main() async {
   runApp(const MyApp());
@@ -18,13 +19,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Flutter Demo',
+      title: 'Restart Educational Foundation',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
         primarySwatch: primaryColor.toMaterialColor(),
         useMaterial3: true,
       ),
+      getPages: appRoutes(),
       home: MyHomePage(),
     );
   }

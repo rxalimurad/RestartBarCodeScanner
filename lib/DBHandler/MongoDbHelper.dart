@@ -13,11 +13,11 @@ class MongoDbHelper {
   }
 
   static Future<List<Map<String, dynamic>>> find(
-      int skip, int pageSize, String searchText) async {
+      int skip, int pageSize, String searchText, String category) async {
     final db = await getDb();
     final result = await db
         .collection(_collectionName)
-        .find(where.match('productName', searchText).skip(skip).limit(pageSize))
+        .find(where.match('productName', searchText).match('category', category).skip(skip).limit(pageSize))
         .toList();
     await db.close();
     return result;
