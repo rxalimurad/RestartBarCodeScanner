@@ -11,13 +11,30 @@ class MyHomePage extends StatelessWidget {
       'route': '/',
     },
     {
-      'title': 'Products',
-      'icon': Icons.shopping_cart,
+      'title': 'Categories',
+      'icon': Icons.category,
       'submenu': [
-        {'title': 'Electronics', 'route': '/electronics'},
-        {'title': 'Clothing', 'route': '/clothing'},
+        {'title': 'Classroom Furniture', 'route': '/classroom-furniture'},
+        {'title': 'Teaching Resources', 'route': '/teaching-resources'},
+        {'title': 'Classroom Decorations', 'route': '/classroom-decorations'},
+        {'title': 'Arts & Crafts', 'route': '/arts-and-crafts'},
         {'title': 'Books', 'route': '/books'},
-      ],
+        {'title': 'Language', 'route': '/language'},
+        {'title': 'Math', 'route': '/math'},
+        {'title': 'Science', 'route': '/science'},
+        {'title': 'STEM', 'route': '/stem'},
+        {'title': 'Social Studies', 'route': '/social-studies'},
+        {'title': 'Infants & Toddlers', 'route': '/infants-and-toddlers'},
+        {'title': 'Blocks & Manipulatives', 'route': '/blocks-and-manipulatives'},
+        {'title': 'Dramatic Play', 'route': '/dramatic-play'},
+        {'title': 'Active Play', 'route': '/active-play'},
+        {'title': 'Sand & Water', 'route': '/sand-and-water'},
+        {'title': 'Sensory Exploration', 'route': '/sensory-exploration'},
+        {'title': 'Music', 'route': '/music'},
+        {'title': 'Games', 'route': '/games'},
+        {'title': 'Puzzles', 'route': '/puzzles'}
+      ]
+
     },
     {
       'title': 'Settings',
@@ -44,10 +61,11 @@ class MyHomePage extends StatelessWidget {
             child: Column(
           children: [
             DrawerHeader(
-              child: Row(
+              child: Column(
                 children: [
-                  Text('RESTART', style: TextStyle(color: Color(0xFFC00000), fontWeight: FontWeight.bold)),
-                  Text(' Education', style: TextStyle(color: Color(0xFF3076B5), fontWeight: FontWeight.bold))
+                  Text('RESTART', style: TextStyle(color: Color(0xFFC00000), fontWeight: FontWeight.bold, fontSize: 30), ),
+                  Text(' Educationall', style: TextStyle(color: Color(0xFF3076B5), fontWeight: FontWeight.bold, fontSize: 30)),
+                  Text(' Foundation', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 30))
                 ],
               ),
             ),
