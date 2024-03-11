@@ -43,7 +43,6 @@ class ProductModel {
   }
 
   Map<String, dynamic> toJson() {
-    print(this);
     return {
       'id': id,
       'category': category,

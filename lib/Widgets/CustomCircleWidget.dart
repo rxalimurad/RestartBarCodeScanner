@@ -5,13 +5,16 @@ class CustomCircleWidget extends StatelessWidget {
   final String upperText;
   final String lowerText;
   final double size;
-  const CustomCircleWidget(
-      {Key? key,
-      required this.circleColor,
-      required this.upperText,
-      required this.lowerText,
-      required this.size})
-      : super(key: key);
+  final bool isSelected;
+
+  const CustomCircleWidget({
+    Key? key,
+    required this.circleColor,
+    required this.upperText,
+    required this.lowerText,
+    required this.size,
+    required this.isSelected,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +27,10 @@ class CustomCircleWidget extends StatelessWidget {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: circleColor,
-              border: Border.all(color: circleColor, width: 4),
+              border: Border.all(
+                color: isSelected ? Colors.black : circleColor,
+                width: isSelected ? 4 : 1,
+              ),
             ),
             child: Center(
               child: Column(
@@ -33,7 +39,9 @@ class CustomCircleWidget extends StatelessWidget {
                   Text(
                     upperText,
                     style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold),
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   Text(
                     lowerText,

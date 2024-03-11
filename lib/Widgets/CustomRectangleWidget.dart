@@ -5,6 +5,7 @@ class CustomRectangleWidget extends StatelessWidget {
   final String labelText;
   final double width;
   final double height;
+  final bool isSelected;
 
   const CustomRectangleWidget({
     Key? key,
@@ -12,6 +13,7 @@ class CustomRectangleWidget extends StatelessWidget {
     required this.labelText,
     required this.width,
     required this.height,
+    required this.isSelected,
   }) : super(key: key);
 
   @override
@@ -22,9 +24,11 @@ class CustomRectangleWidget extends StatelessWidget {
         height: height,
         decoration: BoxDecoration(
           color: rectangleColor,
-          border: Border.all(color: rectangleColor, width: 4),
-          borderRadius:
-              BorderRadius.circular(8.0), // Adjust border radius as needed
+          border: Border.all(
+            color: isSelected ? Colors.black : rectangleColor,
+            width: isSelected ? 2 : 0,
+          ),
+          borderRadius: BorderRadius.circular(8.0),
         ),
         child: Center(
           child: Text(
@@ -33,7 +37,7 @@ class CustomRectangleWidget extends StatelessWidget {
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
-              fontSize: 12.0, // Adjust font size as needed
+              fontSize: 13.0,
             ),
           ),
         ),

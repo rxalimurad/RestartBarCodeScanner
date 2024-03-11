@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:restart_scanner/ProductsList/ProductsListController.dart';
 
 import '../Constants/Constants.dart';
 import '../Model/Model.dart';
@@ -47,12 +49,7 @@ class ProductView extends StatelessWidget {
                 height: 5,
               ),
               Spacer(),
-              Text(
-                product.productName ?? "",
-                style: TextStyle(fontSize: 13),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
+              getTitle(product),
               if (product.barcode != null && product.barcode?.trim() != "") ...[
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0),
@@ -78,7 +75,7 @@ class ProductView extends StatelessWidget {
                                         color: Color(0xFFC00000),
                                         fontSize: 11,
                                         fontWeight: FontWeight.bold)),
-                                Text(' Certified',
+                                Text(' Certified!',
                                     style: TextStyle(
                                         color: Color(0xFF3076B5),
                                         fontSize: 11,
@@ -97,5 +94,33 @@ class ProductView extends StatelessWidget {
             //
           ),
         ));
+  }
+
+  Text getTitle(ProductModel product) {
+    ProductsListController c = Get.find();
+    var searchText = c.searchText.value.trim();
+    var arr = (product.productName ?? "")
+        .toLowerCase()
+        .split(searchText.toLowerCase());
+    print(arr);
+    if (arr.length == 2) {
+      return Text.rich(
+          TextSpan(text: arr[0], style: TextStyle(fontSize: 13), children: [
+        TextSpan(
+            text: searchText.toLowerCase(),
+            style: TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.bold,
+                color: darkGreenColor)),
+        TextSpan(text: arr[1])
+      ]));
+    } else {
+      return Text(
+        product.productName ?? "",
+        style: TextStyle(fontSize: 13),
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
+      );
+    }
   }
 }

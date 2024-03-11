@@ -3,14 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:restart_scanner/Constants/Constants.dart';
+import 'package:restart_scanner/FilterScreen/FilterScreen.dart';
 import 'package:restart_scanner/Model/Model.dart';
-import 'package:restart_scanner/Widgets/CustomCircleWidget.dart';
-import 'package:restart_scanner/Widgets/CustomRectangleWidget.dart';
 import 'package:simple_barcode_scanner/enum.dart';
-import 'package:simple_barcode_scanner/screens/io_device.dart';
 
 import '../DBHandler/MongoDbHelper.dart';
 import '../ProductDetails/ProductDetailsScreen.dart';
+import '../Widgets/BarcodeScannerRevamp.dart';
 import 'ProductView.dart';
 import 'ProductsListController.dart';
 
@@ -69,7 +68,17 @@ class ProductsListScreen extends StatelessWidget {
                 showModalBottomSheet(
                     context: context,
                     builder: (context) {
-                      return filtersView();
+                      var index = 0;
+                      if (_scanController.category.value.isNotEmpty) {
+                        index = 0;
+                      } else if (_scanController.age.value.isNotEmpty) {
+                        index = 1;
+                      }
+
+                      return FilterScreen(
+                          index: index,
+                          scanController: _scanController,
+                          searchController: _searchController);
                     });
               },
               icon: Icon(
@@ -147,22 +156,35 @@ class ProductsListScreen extends StatelessWidget {
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: PagedGridView<int, ProductModel>(
-                      showNewPageProgressIndicatorAsGridChild: false,
-                      pagingController: _scanController.pagingController,
-                      builderDelegate: PagedChildBuilderDelegate<ProductModel>(
-                        itemBuilder: (context, item, index) => GestureDetector(
-                          child: ProductView(product: item),
-                          onTap: () {
-                            Get.to(ProductDetailsScreen(item));
-                          },
+                    child: RefreshIndicator(
+                      onRefresh: () {
+                        if (_scanController.pagingController != null) {
+                          _scanController.pagingController.refresh();
+                          return Future.value(true);
+                        } else {
+                          return Future.value(
+                              false); // or handle the case where pagingController is null
+                        }
+                      },
+                      child: PagedGridView<int, ProductModel>(
+                        showNewPageProgressIndicatorAsGridChild: false,
+                        pagingController: _scanController.pagingController,
+                        builderDelegate:
+                            PagedChildBuilderDelegate<ProductModel>(
+                          itemBuilder: (context, item, index) =>
+                              GestureDetector(
+                            child: ProductView(product: item),
+                            onTap: () {
+                              Get.to(ProductDetailsScreen(item));
+                            },
+                          ),
                         ),
-                      ),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 8.0,
-                        mainAxisSpacing: 8.0,
-                        childAspectRatio: 0.80,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 8.0,
+                          mainAxisSpacing: 8.0,
+                          childAspectRatio: 0.80,
+                        ),
                       ),
                     ),
                   ),
@@ -180,10 +202,15 @@ class ProductsListScreen extends StatelessWidget {
             showModalBottomSheet(
               context: context,
               builder: (BuildContext context) {
-                return BarcodeScanner(
+                return BarcodeScannerRevamped(
                   lineColor: "#ff6666",
                   cancelButtonText: "Cancel",
                   isShowFlashIcon: true,
+                  loadingWidget: Text(
+                    "Verifying Product...",
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
+                  ),
                   scanType: ScanType.barcode,
                   appBarTitle: "Scan Barcode",
                   centerTitle: true,
@@ -195,17 +222,17 @@ class ProductsListScreen extends StatelessWidget {
                     MongoDbHelper.getProduct(res).then(
                       (value) {
                         if (value != null) {
+                          Navigator.pop(context);
                           Get.to(ProductDetailsScreen(value));
                         } else {
-                          Get.snackbar("Error", "Product not found",
-                              snackPosition: SnackPosition.BOTTOM);
+                          Navigator.pop(context);
+                          SnackBar snackBar = SnackBar(
+                            content: Text("Product not found"),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         }
-
-                        Navigator.pop(context);
                       },
                     );
-
-                    Navigator.pop(context);
                   },
                 );
               },
@@ -213,155 +240,6 @@ class ProductsListScreen extends StatelessWidget {
           },
           child: Icon(Icons.barcode_reader),
         ),
-      ),
-    );
-  }
-
-  SafeArea filtersView() {
-    // var _tabController = TabController(length: 4, vsync: this);
-    return SafeArea(
-      child: Container(
-        height: 400,
-        child: DefaultTabController(
-            length: 2,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Scaffold(
-                  body: Column(
-                children: [
-                  Container(
-                    height: 45,
-                    decoration: BoxDecoration(
-                      color: Colors.grey[300],
-                      borderRadius: BorderRadius.circular(
-                        25.0,
-                      ),
-                    ),
-                    child: TabBar(
-                      // isScrollable: true,
-                      // controller: _tabController,
-                      // give the indicator a decoration (color and border radius)
-                      indicator: BoxDecoration(
-                        borderRadius: BorderRadius.circular(
-                          25.0,
-                        ),
-                        color: Colors.green,
-                      ),
-                      labelColor: Colors.white,
-                      unselectedLabelColor: Colors.black,
-                      tabs: [
-                        // first tab [you can add an icon using the icon property]
-                        Tab(
-                          child: Text('Category', textAlign: TextAlign.center),
-                        ),
-
-                        // second tab [you can add an icon using the icon property]
-
-                        Tab(
-                          child: Text('Age', textAlign: TextAlign.center),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                      child: TabBarView(
-                    children: [
-                      // first tab bar view widget
-                      Container(
-                        child: Center(
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 8.0),
-                            child: GridView.count(
-                              crossAxisCount: 4, // Number of columns
-                              mainAxisSpacing:
-                                  0, // Vertical spacing between cells
-                              children: [
-                                "Classroom Furniture/68ca33",
-                                "Teaching Resources/3398cc",
-                                "Classroom Decorations/9a34cc",
-                                "Arts & Crafts/ffc432",
-                                "Books/fe7a3d",
-                                "Language/ff3334",
-                                "Math/68ca33",
-                                "Science/3398cc",
-                                "STEM/9a34cc",
-                                "Social Studies/ffc432",
-                                "Infants & Toddlers/fe7a3d",
-                                "Blocks & Manipulatives/ff3334",
-                                "Dramatic Play/68ca33",
-                                "Active Play/3398cc",
-                                "Sand & Water/9a34cc",
-                                "Sensory Exploration/ffc432",
-                                "Music/fe7a3d",
-                                "Games/ff3334",
-                                "Puzzles/68ca33"
-                              ]
-                                  .map((e) => GestureDetector(
-                                        onTap: () {
-                                          Get.back();
-                                          _scanController.searchText.value = "";
-                                          _searchController.text = "";
-                                          _scanController.age.value = "";
-
-                                          _scanController.category.value =
-                                              e.split("/").first;
-                                          _scanController.pagingController
-                                              .refresh();
-                                        },
-                                        child: CustomRectangleWidget(
-                                            rectangleColor:
-                                                hexToColor(e.split("/").last),
-                                            labelText: e.split("/").first,
-                                            width: 90,
-                                            height: 90),
-                                      ))
-                                  .toList(),
-                            ),
-                          ),
-                        ),
-                      ),
-                      // second tab bar view widget
-
-                      Container(
-                        child: Center(
-                          child: GridView.count(
-                            crossAxisCount: 3, // Number of columns
-                            children: [
-                              "0-18/65ca33/months",
-                              "18-36/9b31cc/months",
-                              "3-4/febe00/years",
-                              "5-6/3398cc/years",
-                              "7-8/fc6f05/years",
-                              "9-11/ff3334/years"
-                            ]
-                                .map((e) => GestureDetector(
-                                      onTap: () {
-                                        Get.back();
-                                        _scanController.searchText.value = "";
-                                        _searchController.text = "";
-                                        _scanController.age.value = e;
-                                        _scanController.category.value = "";
-                                        _scanController.pagingController
-                                            .refresh();
-                                      },
-                                      child: CustomCircleWidget(
-                                        circleColor:
-                                            hexToColor(e.split("/")[1]),
-                                        upperText: e.split("/").first,
-                                        lowerText: e.split("/").last,
-                                        size:
-                                            100, // You can adjust the size as needed
-                                      ),
-                                    ))
-                                .toList(),
-                          ),
-                        ),
-                      ),
-                    ],
-                  )),
-                ],
-              )),
-            )),
       ),
     );
   }

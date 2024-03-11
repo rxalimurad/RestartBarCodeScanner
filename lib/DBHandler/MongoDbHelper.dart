@@ -35,14 +35,28 @@ class MongoDbHelper {
         .find(where
             .gte('minAge', defaultminAge)
             .lte('maxAge', defaultmaxAge)
-            .match('productName', searchText, caseInsensitive: true)
+            .match(
+              'productName',
+              buildCaseInsensitiveRegExp(searchText.trim()),
+              caseInsensitive: true,
+            )
             .match('category', category)
             .skip(skip)
             .limit(pageSize))
         .toList();
     await db.close();
-    print(result);
     return result;
+  }
+
+  static String buildCaseInsensitiveRegExp(String input) {
+    String pattern = input.split('').map((char) {
+      if (char.toUpperCase() != char.toLowerCase()) {
+        return '[${char.toUpperCase()}${char.toLowerCase()}]';
+      } else {
+        return RegExp.escape(char);
+      }
+    }).join('');
+    return pattern;
   }
 
   static Future<ProductModel?> getProduct(String barcode) async {
@@ -52,7 +66,6 @@ class MongoDbHelper {
         .findOne(where.eq('barcode', barcode));
     await db.close();
     if (product == null) {
-      print('Product not found with ID: ${barcode.toString()}');
       return null;
     }
     return ProductModel.formJson(product);
@@ -64,14 +77,11 @@ class MongoDbHelper {
   ) async {
     final db = await getDb();
 
-    print('Updating barcode for product ID: ${produ.toString()}');
-
     try {
       var product = await db.collection(_collectionName).findOne(
             where.eq('_id', produ),
           );
 
-      print('product: $product prdId: $produ newBarcode: $newBarcode');
       if (product != null) {
         // Update the barcode
         product['barcode'] = newBarcode;

@@ -25,7 +25,6 @@ class ProductsListController extends GetxController {
   }
 
   Future<void> fetchProducts(int pageKey) async {
-    print("pageKey: $pageKey");
     int pageSize = 20;
     int skip = (pageKey - 1) * pageSize;
 
@@ -34,12 +33,15 @@ class ProductsListController extends GetxController {
               this.age.value)
           .then((value) {
         var products = <ProductModel>[];
-
+        print("value: $value");
         for (var item in value) {
           products.add(ProductModel.formJson(item));
-          print("min grade: ${item['minGrade']}");
         }
-        pagingController.appendPage(products, pageKey + 1);
+        if (products.isNotEmpty) {
+          pagingController.appendPage(products, pageKey + 1);
+        } else {
+          pagingController.appendLastPage(products);
+        }
       });
     } catch (e) {
       pagingController.error = e;
