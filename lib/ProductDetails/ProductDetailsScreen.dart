@@ -1,4 +1,3 @@
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
@@ -7,7 +6,11 @@ import 'package:get/get.dart';
 import 'package:readmore/readmore.dart';
 import 'package:restart_scanner/Constants/Constants.dart';
 import 'package:restart_scanner/Model/Model.dart';
-import 'package:restart_scanner/Widgets/Barcodegenerator.dart';
+import 'package:restart_scanner/ProductsList/ProductsListController.dart';
+import 'package:simple_barcode_scanner/enum.dart';
+import 'package:simple_barcode_scanner/screens/io_device.dart';
+
+import '../DBHandler/MongoDbHelper.dart';
 
 const titleFontSize = 15.0;
 
@@ -23,6 +26,7 @@ class ProductDetailsScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text("Product Details"),
+          backgroundColor: primaryColor,
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () {
@@ -32,130 +36,199 @@ class ProductDetailsScreen extends StatelessWidget {
         ),
         body: Padding(
           padding: const EdgeInsets.all(10.0),
-          child: SingleChildScrollView(child: Column(
-            children: [
-              Container(
-                child: CarouselSlider.builder(
-                  itemCount: product.allProductImageURLs?.length,
-                  itemBuilder: (BuildContext context, int itemIndex,
-                      int pageViewIndex) =>
-                      Container(
-                        color: Colors.white12,
-                        child: CachedNetworkImage(
-                          // width: 100,
-                          height: 100,
-                          imageUrl: product.allProductImageURLs?[itemIndex] ?? "",
-                          placeholder: (context, url) =>
-                              Icon(Icons.hourglass_bottom),
-                          errorWidget: (context, url, error) => Icon(Icons.error),
-                        ),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Container(
+                  child: CarouselSlider.builder(
+                    itemCount: product.allProductImageURLs?.length,
+                    itemBuilder: (BuildContext context, int itemIndex,
+                            int pageViewIndex) =>
+                        Container(
+                      color: Colors.white12,
+                      child: CachedNetworkImage(
+                        // width: 100,
+                        height: 100,
+                        imageUrl: product.allProductImageURLs?[itemIndex] ?? "",
+                        placeholder: (context, url) =>
+                            Icon(Icons.hourglass_bottom),
+                        errorWidget: (context, url, error) => Icon(Icons.error),
                       ),
-                  options: CarouselOptions(
-                    height: 200,
-                    aspectRatio: 16 / 9,
-                    viewportFraction: 0.8,
-                    initialPage: 0,
-                    enableInfiniteScroll: true,
-                    reverse: false,
-                    autoPlay: true,
-                    autoPlayInterval: Duration(seconds: 3),
-                    autoPlayAnimationDuration: Duration(milliseconds: 1000),
-                    autoPlayCurve: Curves.fastOutSlowIn,
-                    enlargeCenterPage: true,
-                    enlargeFactor: 0.5,
-                    onPageChanged: (index, r) {
-                      currentIndexPage.value = index;
-                    },
-                    scrollDirection: Axis.horizontal,
+                    ),
+                    options: CarouselOptions(
+                      height: 200,
+                      aspectRatio: 16 / 9,
+                      viewportFraction: 0.8,
+                      initialPage: 0,
+                      enableInfiniteScroll: true,
+                      reverse: false,
+                      autoPlay: true,
+                      autoPlayInterval: Duration(seconds: 3),
+                      autoPlayAnimationDuration: Duration(milliseconds: 1000),
+                      autoPlayCurve: Curves.fastOutSlowIn,
+                      enlargeCenterPage: true,
+                      enlargeFactor: 0.5,
+                      onPageChanged: (index, r) {
+                        currentIndexPage.value = index;
+                      },
+                      scrollDirection: Axis.horizontal,
+                    ),
                   ),
                 ),
-              ),
-              Obx(() {
-                return DotsIndicator(
-                  dotsCount: product.allProductImageURLs?.length ?? 0,
-                  position: currentIndexPage.value,
-                  decorator: DotsDecorator(
-                    activeColor: primaryColor,
-                    size: const Size.square(7.0),
-                    activeSize: const Size(15.0, 7.0),
-                    activeShape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5.0)),
-                  ),
-                );
-              }),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Title",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: titleFontSize),
-                  ),
-                  Text(product.productName ?? ""),
-                  SizedBox(height: 10),
-                  Divider(),
-                  SizedBox(height: 10),
-                  if (getRecommendedAge(product).isNotEmpty) ...[
-                    Text("Recommended Age",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: titleFontSize)),
-                    Text(getRecommendedAge(product)),
-                    SizedBox(height: 10),
-                    Divider(),
-                    SizedBox(height: 10),
-                  ],
-                  if (product.additionalInfo != null &&
-                      product
-                          .additionalInfo!.removeAllWhitespace.isNotEmpty) ...[
-                    Text("Additional Information",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: titleFontSize)),
-                    Text(product.additionalInfo?.trim() ?? "N/A"),
-                    SizedBox(height: 10),
-                    Divider(),
-                    SizedBox(height: 10),
-                  ],
-                  if (product.desc != null &&
-                      product.desc!.removeAllWhitespace.isNotEmpty) ...[
-                    Text("Description",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: titleFontSize)),
-                    ReadMoreText(
-                      product.desc ?? "",
-                      trimLines: 2,
-                      colorClickableText: Colors.pink,
-                      trimMode: TrimMode.Line,
-                      trimCollapsedText: 'Show more',
-                      trimExpandedText: 'Show less',
-                      moreStyle:
-                      TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                Obx(() {
+                  return DotsIndicator(
+                    dotsCount: product.allProductImageURLs?.length ?? 0,
+                    position: currentIndexPage.value,
+                    decorator: DotsDecorator(
+                      activeColor: primaryColor,
+                      size: const Size.square(7.0),
+                      activeSize: const Size(15.0, 7.0),
+                      activeShape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5.0)),
                     ),
+                  );
+                }),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Title",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: titleFontSize),
+                    ),
+                    Text(product.productName ?? ""),
                     SizedBox(height: 10),
                     Divider(),
                     SizedBox(height: 10),
-                    if (product.barcode == null) ...[
-                      Center(
-                        child: ElevatedButton(
-                          onPressed: () {
-                            // Add your code to handle barcode scanning here
-                          },
-                          style: ElevatedButton.styleFrom(
-                            foregroundColor: Colors.white, backgroundColor: primaryColor,
-                          ),
-                          child: Text('Scan Barcode',
-                              style: TextStyle(color: Colors.white)),
-                        ),
-                      ),
+                    if (getRecommendedAge(product).isNotEmpty) ...[
+                      Text("Recommended Age",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: titleFontSize)),
+                      Text(getRecommendedAge(product)),
+                      SizedBox(height: 10),
+                      Divider(),
+                      SizedBox(height: 10),
                     ],
-                    BarcodeGeneratorWidget(data: "98765432109")
-                  ]
-                ],
-              )
-            ],
-          ),),
+                    if (product.additionalInfo != null &&
+                        product.additionalInfo!.removeAllWhitespace
+                            .isNotEmpty) ...[
+                      Text("Additional Information",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: titleFontSize)),
+                      Text(product.additionalInfo?.trim() ?? "N/A"),
+                      SizedBox(height: 10),
+                      Divider(),
+                      SizedBox(height: 10),
+                    ],
+                    if (product.desc != null &&
+                        product.desc!.removeAllWhitespace.isNotEmpty) ...[
+                      Text("Description",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: titleFontSize)),
+                      ReadMoreText(
+                        product.desc ?? "",
+                        trimLines: 2,
+                        colorClickableText: Colors.pink,
+                        trimMode: TrimMode.Line,
+                        trimCollapsedText: 'Show more',
+                        trimExpandedText: 'Show less',
+                        moreStyle: TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(height: 10),
+                      Divider(),
+                      SizedBox(height: 10),
+                      if (product.barcode == null || product.barcode == "") ...[
+                        Center(
+                          child: ElevatedButton(
+                            onPressed: () async {
+                              showModalBottomSheet(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return BarcodeScanner(
+                                    lineColor: "#ff6666",
+                                    cancelButtonText: "Cancel",
+                                    isShowFlashIcon: true,
+                                    scanType: ScanType.barcode,
+                                    appBarTitle: "Scan Barcode",
+                                    centerTitle: true,
+                                    onScanned: (res) async {
+                                      if (res.isEmpty || res == "-1") {
+                                        Navigator.pop(context);
+                                        return;
+                                      }
+                                      print("Barcode: $res");
+
+                                      var newProduct =
+                                          await MongoDbHelper.updateBarcode(
+                                              product.id, res);
+                                      if (newProduct != null) {
+                                        product = newProduct;
+                                        SnackBar snackBar = SnackBar(
+                                          content: Text('Barcode updated'),
+                                          duration: Duration(seconds: 3),
+                                        );
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(snackBar);
+                                        ProductsListController c = Get.find();
+                                        c.updateProduct(product);
+                                        this.product = product;
+                                        c.pagingController.refresh();
+                                        Get.back();
+                                      } else {
+                                        Get.snackbar("Error",
+                                            "Failed to update barcode");
+                                      }
+
+                                      Navigator.pop(context);
+                                    },
+                                  );
+                                },
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              foregroundColor: Colors.white,
+                              backgroundColor: primaryColor,
+                            ),
+                            child: Text('Scan Barcode',
+                                style: TextStyle(color: Colors.white)),
+                          ),
+                        ),
+                      ],
+                      if (product.barcode != null && product.barcode != "") ...[
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 5),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text('RESTART',
+                                      style: TextStyle(
+                                          color: Color(0xFFC00000),
+                                          fontSize: 30,
+                                          fontWeight: FontWeight.bold)),
+                                  Text(' Certified',
+                                      style: TextStyle(
+                                          color: Color(0xFF3076B5),
+                                          fontSize: 30,
+                                          fontWeight: FontWeight.bold))
+                                ],
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    ]
+                  ],
+                )
+              ],
+            ),
+          ),
         ),
       ),
     );
@@ -163,15 +236,15 @@ class ProductDetailsScreen extends StatelessWidget {
 
   String getRecommendedAge(ProductModel? model) {
     var result = "";
-    var minAge = model?.minAge ?? "";
-    var maxAge = model?.maxAge ?? "";
+    var minAge = model?.minAge ?? -1;
+    var maxAge = model?.maxAge ?? -1;
     var minGrade = model?.minGrade ?? "";
     var maxGrade = model?.maxGrade ?? "";
-    if (minAge.isNotEmpty) {
-      result += minAge + " ";
+    if (minAge != -1) {
+      result += getAgeString(minAge) + " ";
     }
-    if (maxAge.isNotEmpty) {
-      result += "- $maxAge";
+    if (maxAge != -1) {
+      result += "- ${getAgeString(maxAge)}";
     }
     if (minGrade.isNotEmpty) {
       result += " / $minGrade ";
@@ -181,5 +254,19 @@ class ProductDetailsScreen extends StatelessWidget {
     }
 
     return result.trim();
+  }
+
+  getAgeString(int minAge) {
+    var app = "";
+    if (minAge == 0) {
+      app = "Birth";
+    } else if (minAge <= 36) {
+      app = "$minAge mos";
+    } else if (minAge == 216) {
+      app = "Adult";
+    } else {
+      app = "${(minAge / 12).toInt()} yrs";
+    }
+    return app;
   }
 }

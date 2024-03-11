@@ -1,10 +1,12 @@
+import 'package:mongo_dart/mongo_dart.dart';
+
 class ProductModel {
-  final String id;
+  final ObjectId id;
   final String? category;
   final String? productName;
   final List<String>? allProductImageURLs;
-  final String? minAge;
-  final String? maxAge;
+  final int? minAge;
+  final int? maxAge;
   final String? minGrade;
   final String? maxGrade;
   final String? desc;
@@ -17,23 +19,23 @@ class ProductModel {
       required this.productName,
       required this.allProductImageURLs,
       required this.minAge,
-        required this.maxAge,
-        required this.minGrade,
-        required this.maxGrade,
-        required this.additionalInfo,
+      required this.maxAge,
+      required this.minGrade,
+      required this.maxGrade,
+      required this.additionalInfo,
       required this.desc,
       required this.barcode});
 
   static ProductModel formJson(Map<String, dynamic> json) {
     return ProductModel(
-        id: json['_id'].toString(),
+        id: json['_id'],
         category: json['category'],
         productName: json['productName'],
         allProductImageURLs:
             (json['allProductImageURLs'] as List<dynamic>?)?.cast<String>(),
         minAge: json['minAge'],
         maxAge: json['maxAge'],
-        minGrade: json['maxAge'],
+        minGrade: json['minGrade'],
         maxGrade: json['maxGrade'],
         desc: json['description'],
         additionalInfo: json['additionalInformation'],
@@ -41,6 +43,7 @@ class ProductModel {
   }
 
   Map<String, dynamic> toJson() {
+    print(this);
     return {
       'id': id,
       'category': category,

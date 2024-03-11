@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+
 import '../Constants/Constants.dart';
 import '../Model/Model.dart';
+
 class ProductView extends StatelessWidget {
   final ProductModel product;
 
@@ -28,8 +30,7 @@ class ProductView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("`${product.category}",
-                  style: TextStyle(fontSize: 11)),
+              Text("`${product.category}", style: TextStyle(fontSize: 11)),
               SizedBox(
                 height: 5,
               ),
@@ -45,12 +46,14 @@ class ProductView extends StatelessWidget {
               SizedBox(
                 height: 5,
               ),
-              Text(product.productName ?? "",
+              Spacer(),
+              Text(
+                product.productName ?? "",
                 style: TextStyle(fontSize: 13),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
-              if (product.barcode != null || product.barcode != "")
+              if (product.barcode != null && product.barcode?.trim() != "") ...[
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0),
                   child: IntrinsicWidth(
@@ -63,7 +66,8 @@ class ProductView extends StatelessWidget {
                           ),
                           borderRadius: BorderRadius.circular(20.0)),
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 5),
                         child: Column(
                           children: [
                             Row(
@@ -87,6 +91,7 @@ class ProductView extends StatelessWidget {
                     ),
                   ),
                 )
+              ]
             ],
             // subtitle:
             //
