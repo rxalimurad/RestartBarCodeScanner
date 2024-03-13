@@ -32,7 +32,7 @@ class ProductView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("`${product.category}", style: TextStyle(fontSize: 11)),
+              Text("${product.category}", style: TextStyle(fontSize: 11)),
               SizedBox(
                 height: 5,
               ),
