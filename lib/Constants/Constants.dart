@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
-const primaryColor = Colors.black;
+const primaryColor = darkBlueColor;
 const darkGreenColor = Color(0xFF006400);
+const darkRedColor = Color(0xFFC00000);
+const darkBlueColor = Color(0xFF3076B5);
 
 Color hexToColor(String hexString) {
   hexString = hexString.replaceFirst('#', '');

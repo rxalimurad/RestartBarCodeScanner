@@ -4,7 +4,7 @@ project(restart_scanner LANGUAGES CXX)
 
 # The name of the executable created for the application. Change this to change
 # the on-disk name of your application.
-set(BINARY_NAME "restart_scanner")
+set(BINARY_NAME "RESTART Certified")
 
 # Explicitly opt in to modern CMake behaviors to avoid warnings with recent
 # versions of CMake.

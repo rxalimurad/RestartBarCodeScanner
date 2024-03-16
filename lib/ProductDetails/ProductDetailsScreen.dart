@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:readmore/readmore.dart';
 import 'package:restart_scanner/Constants/Constants.dart';
+import 'package:restart_scanner/LocalDataHandler/LocalDataHandler.dart';
 import 'package:restart_scanner/Model/Model.dart';
 import 'package:restart_scanner/ProductsList/ProductsListController.dart';
+import 'package:restart_scanner/Widgets/CustomAlert.dart';
 import 'package:simple_barcode_scanner/enum.dart';
 
 import '../DBHandler/MongoDbHelper.dart';
@@ -145,86 +147,101 @@ class ProductDetailsScreen extends StatelessWidget {
                         Center(
                           child: ElevatedButton(
                             onPressed: () async {
-                              showModalBottomSheet(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return Stack(
-                                    children: [
-                                      BarcodeScannerRevamped(
-                                        lineColor: "#ff6666",
-                                        cancelButtonText: "Cancel",
-                                        isShowFlashIcon: true,
-                                        scanType: ScanType.barcode,
-                                        appBarTitle: "Scan Barcode",
-                                        centerTitle: true,
-                                        loadingWidget: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 8, vertical: 5),
-                                          child: Column(
-                                            children: [
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Text('RESTART',
-                                                      style: TextStyle(
-                                                          color:
-                                                              Color(0xFFC00000),
-                                                          fontSize: 25,
-                                                          fontWeight:
-                                                              FontWeight.bold)),
-                                                  Text(' Certified!',
-                                                      style: TextStyle(
-                                                          color:
-                                                              Color(0xFF3076B5),
-                                                          fontSize: 25,
-                                                          fontWeight:
-                                                              FontWeight.bold))
-                                                ],
-                                              )
-                                            ],
+                              var isLoggedIn =
+                                  (await LocalDataHandler.getUserData()) !=
+                                      null;
+                              if (isLoggedIn) {
+                                showModalBottomSheet(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return Stack(
+                                      children: [
+                                        BarcodeScannerRevamped(
+                                          lineColor: "#ff6666",
+                                          cancelButtonText: "Cancel",
+                                          isShowFlashIcon: true,
+                                          scanType: ScanType.barcode,
+                                          appBarTitle: "Scan Barcode",
+                                          centerTitle: true,
+                                          loadingWidget: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 8, vertical: 5),
+                                            child: Column(
+                                              children: [
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Text('RESTART',
+                                                        style: TextStyle(
+                                                            color: darkRedColor,
+                                                            fontSize: 25,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold)),
+                                                    Text(' Certified!',
+                                                        style: TextStyle(
+                                                            color:
+                                                                darkBlueColor,
+                                                            fontSize: 25,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold))
+                                                  ],
+                                                )
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                        onScanned: (res) async {
-                                          if (res.isEmpty || res == "-1") {
+                                          onScanned: (res) async {
+                                            if (res.isEmpty || res == "-1") {
+                                              Navigator.pop(context);
+                                              return;
+                                            }
+                                            print("Barcode: $res");
+
+                                            var newProduct = await MongoDbHelper
+                                                .updateBarcode(product.id, res);
+                                            if (newProduct != null) {
+                                              product = newProduct;
+                                              SnackBar snackBar = SnackBar(
+                                                content:
+                                                    Text('Barcode updated'),
+                                                duration: Duration(seconds: 3),
+                                              );
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(snackBar);
+                                              ProductsListController c =
+                                                  Get.find();
+                                              c.updateProduct(product);
+                                              this.product = product;
+                                              c.pagingController.refresh();
+                                              Get.back();
+                                            } else {
+                                              Get.snackbar("Error",
+                                                  "Failed to update barcode");
+                                            }
+
                                             Navigator.pop(context);
-                                            return;
-                                          }
-                                          print("Barcode: $res");
-
-                                          var newProduct =
-                                              await MongoDbHelper.updateBarcode(
-                                                  product.id, res);
-                                          if (newProduct != null) {
-                                            product = newProduct;
-                                            SnackBar snackBar = SnackBar(
-                                              content: Text('Barcode updated'),
-                                              duration: Duration(seconds: 3),
-                                            );
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(snackBar);
-                                            ProductsListController c =
-                                                Get.find();
-                                            c.updateProduct(product);
-                                            this.product = product;
-                                            c.pagingController.refresh();
-                                            Get.back();
-                                          } else {
-                                            Get.snackbar("Error",
-                                                "Failed to update barcode");
-                                          }
-
-                                          Navigator.pop(context);
-                                        },
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              } else {
+                                Get.dialog(CustomAlertDialog(
+                                    title: "You are not logged in",
+                                    message: "Please login to scan barcode",
+                                    OKTitle: "Login",
+                                    onOkPressed: () {
+                                      Get.back();
+                                      Get.toNamed("/LoginScreen");
+                                    }));
+                              }
                             },
                             style: ElevatedButton.styleFrom(
                               foregroundColor: Colors.white,
-                              backgroundColor: primaryColor,
+                              backgroundColor: darkRedColor,
                             ),
                             child: Text('Scan Barcode',
                                 style: TextStyle(color: Colors.white)),
@@ -242,12 +259,12 @@ class ProductDetailsScreen extends StatelessWidget {
                                 children: [
                                   Text('RESTART',
                                       style: TextStyle(
-                                          color: Color(0xFFC00000),
+                                          color: darkRedColor,
                                           fontSize: 30,
                                           fontWeight: FontWeight.bold)),
                                   Text(' Certified!',
                                       style: TextStyle(
-                                          color: Color(0xFF3076B5),
+                                          color: darkBlueColor,
                                           fontSize: 30,
                                           fontWeight: FontWeight.bold))
                                 ],

@@ -72,12 +72,12 @@ class ProductView extends StatelessWidget {
                               children: [
                                 Text('RESTART',
                                     style: TextStyle(
-                                        color: Color(0xFFC00000),
+                                        color: darkRedColor,
                                         fontSize: 11,
                                         fontWeight: FontWeight.bold)),
                                 Text(' Certified!',
                                     style: TextStyle(
-                                        color: Color(0xFF3076B5),
+                                        color: darkBlueColor,
                                         fontSize: 11,
                                         fontWeight: FontWeight.bold))
                               ],
