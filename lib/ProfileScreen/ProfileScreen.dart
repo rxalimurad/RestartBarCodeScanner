@@ -42,7 +42,7 @@ class ProfileScreen extends StatelessWidget {
                   child: Obx(() {
                     return ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        primary: Colors.red,
+                        backgroundColor: Colors.red,
                       ),
                       onPressed: () async {
                         Get.dialog(CustomAlertDialog(

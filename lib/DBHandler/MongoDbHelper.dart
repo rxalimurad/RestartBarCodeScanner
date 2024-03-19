@@ -1,4 +1,6 @@
 import 'package:mongo_dart/mongo_dart.dart';
+import 'package:restart_scanner/Constants/Constants.dart';
+import 'package:restart_scanner/EmailHandler/EmailHandler.dart';
 
 import '../LocalDataHandler/LocalDataHandler.dart';
 import '../Model/Model.dart';
@@ -145,6 +147,15 @@ class MongoDbHelper {
         'password': password,
       });
 
+      var body = newUserEmailTemplate
+          .replaceAll(namePlaceholder, name)
+          .replaceAll(emailPlaceholder, email)
+          .replaceAll(phonePlaceholder, phoneNumber);
+
+      await EmailHandler.getInstance().sendEmail(
+        'New user created on Restart Certified!',
+        body,
+      );
       return LoginResponseStatus.success; // User created successfully
     } catch (e) {
       // Handle any errors

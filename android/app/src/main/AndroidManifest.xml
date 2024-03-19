@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.INTERNET"/>
-    <application android:label="RESTART Certified" android:name="${applicationName}" android:enableOnBackInvokedCallback="true" android:icon="@mipmap/launcher_icon">
+    <application android:label="RESTART Certified" android:name="${applicationName}" android:enableOnBackInvokedCallback="true" android:icon="@mipmap/ic_launcher">
 
         <!-- Define the SplashActivity as the launcher activity -->
         <activity android:name=".SplashActivity" android:theme="@style/SplashTheme" android:exported="true" android:launchMode="singleTop">
