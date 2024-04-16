@@ -1,16 +1,50 @@
-# restart_scanner
+<img src="././SS/i5dymfhc.png"
+style="width:1.38125in;height:3.25958in" /><img src="././SS/yrogv15c.png"
+style="width:1.3875in;height:3.25861in" /><img src="././SS/f4bphb0w.png"
+style="width:1.4743in;height:3.25972in" />
 
-A new Flutter project.
+Restart Educational Foundation
 
-## Getting Started
+> 1\. Products:
+>
+> • Onthelanding screen,allproductswillbeshown.
+>
+> • Users and searchfor anyproductfromthesearchbar atthetop.
+>
+> • Users canalsofilter productsonthebaseofageand
+> categoriesfromthefilter button atthetop rightcorner.
+>
+> • Ontapping anyproductuser canseeproductdetails.
+>
+> 2\. Scanning Productsintosystem:
+>
+> • Toscanproducts,searchproducts. • Gotoitsdetailsscreen.
+>
+> • Pressthe**ScanBarcode**button. • Itwillopenabar codescanner.
+>
+> • Scanproduct,itwilladdthisbar codeagainstthisproductinour system.
+>
+> • After adding barcodeintoour system.TherewillbeRestartCertified
+> tagswiththis Product.
 
-This project is a starting point for a Flutter application.
+<img src="././SS/zbrarhab.png"
+style="width:1.38958in;height:3.25903in" /><img src="././SS/bpcz5bl4.png"
+style="width:1.38958in;height:3.25903in" />
 
-A few resources to get you started if this is your first Flutter project:
+> 3\. SearchaProductthroughBarcode
+>
+> • Onceaproductwillbeadded tothesystem.
+>
+> • Userscanverifythisproductthroughbarcode.
+>
+> • Pressthescanner buttonatthebottomright,itwillopenabarcodescanning
+> camera.
+>
+> • Scantheproduct,ifitemexistsinsystem,itwilltakeyoutoproductdetails
+> screen.
+>
+> • Otherwise,itwillshowproductsnotfound.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<img src="././SS/sv252vtk.png"
+style="width:1.50417in;height:3.25903in" /><img src="././SS/ozt3osr1.png"
+style="width:1.50417in;height:3.25903in" />
